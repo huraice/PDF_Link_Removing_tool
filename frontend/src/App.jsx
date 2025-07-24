@@ -9,7 +9,9 @@ function App() {
 
   // Check backend connection on mount
 useEffect(() => {
-  axios.get('http://localhost:5000/ping')
+  axios.get('/ping')
+
+
     .then((res) => {
       console.log("Backend Response:", res);
       if (res.status === 200 && res.data.message) {
@@ -40,9 +42,11 @@ useEffect(() => {
     formData.append('file', pdfFile);
 
     try {
-      const response = await axios.post('http://localhost:5000/clean-pdf', formData, {
-        responseType: 'blob',
-      });
+      const response = await axios.post('/clean-pdf', formData, {
+
+  responseType: 'blob',
+});
+
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       setCleanedPdfUrl(url);
@@ -60,15 +64,7 @@ useEffect(() => {
       PDF External Link Remover
     </h1>
 
-    {connectionStatus && (
-      <div
-        className={`mb-6 text-lg font-semibold ${
-          connectionStatus.startsWith("✅") ? "text-green-600" : "text-red-500"
-        }`}
-      >
-        {connectionStatus}
-      </div>
-    )}
+    
 
     <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-md flex flex-col items-center">
       <input
@@ -95,6 +91,15 @@ useEffect(() => {
       >
         {loading ? 'Cleaning PDF...' : 'Remove External Links'}
       </button>
+      {connectionStatus && (
+      <div
+        className={`mb-6 text-lg font-semibold ${
+          connectionStatus.startsWith("✅") ? "text-green-600" : "text-red-500"
+        }`}
+      >
+        {connectionStatus}
+      </div>
+    )}
 
       {cleanedPdfUrl && (
         <a

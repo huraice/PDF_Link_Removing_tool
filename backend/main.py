@@ -37,3 +37,6 @@ async def clean_pdf(file: UploadFile = File(...)):
     return StreamingResponse(output_stream, media_type="application/pdf", headers={
         "Content-Disposition": f"attachment; filename=cleaned_{file.filename}"
     })
+@app.get("/")
+def home():
+    return {"message": "PDF Link Remover Backend is Running"}
